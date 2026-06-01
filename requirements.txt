@@ -5,4 +5,3 @@ pandas
 pillow
 opencv-python
 plotly
-sqlite3
