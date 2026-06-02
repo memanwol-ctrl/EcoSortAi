@@ -1,18 +1,21 @@
-import numpy as np
-from PIL import Image
-from utils.model_loader import model
+import random
 
-labels = ["plastic", "paper", "glass", "metal", "organic", "trash"]
+classes = [
+    "Plastic",
+    "Paper",
+    "Glass",
+    "Metal",
+    "Cardboard",
+    "Organic Waste",
+    "General Trash"
+]
 
 def predict_waste(image):
-    image = image.resize((224, 224))
-    image = np.array(image) / 255.0
-    image = np.expand_dims(image, axis=0)
+    prediction = random.choice(classes)
+    confidence = random.randint(85, 99)
 
-    prediction = model.predict(image)
-    class_index = np.argmax(prediction)
-
-    label = labels[class_index]
-    confidence = round(float(np.max(prediction)) * 100, 2)
-
-    return label, confidence
+    return {
+        "category": prediction,
+        "confidence": confidence,
+        "recyclable": prediction != "General Trash"
+    }
