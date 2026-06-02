@@ -16,10 +16,19 @@ if uploaded_file:
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    label, confidence = predict_waste(image)
+    result = predict_waste(image)
 
-    st.success(f"Detected Waste: {label}")
-    st.info(f"Confidence: {confidence}%")
+label = result["category"]
+confidence = result["confidence"]
+recyclable = result["recyclable"]
+
+    st.success(f"Waste Type: {label}")
+st.info(f"Confidence: {confidence}%")
+
+if recyclable:
+    st.success("♻ Recyclable")
+else:
+    st.warning("🗑 Non-Recyclable")
 
     # CO2 calculation
     co2_saved = 0
